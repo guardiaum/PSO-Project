@@ -1,10 +1,20 @@
-from classic.Particle import Particle
+from beans.Particle import Particle
 from random import random
 from random import uniform
-from random import randint
 
 
-class GlobalSwarm():
+class GlobalSwarm(object):
+
+    def __init__(self, function, bounds, swarm_size, max_iter,
+                 inertia_w=0.5, cognitive_c1=0.5, social_c2=0.5):
+        self.function = function
+        self.bounds = bounds
+        self.dimensions = len(bounds)
+        self.swarm_size = swarm_size
+        self.max_iter = max_iter
+        self.inertia_w = inertia_w
+        self.cognitive_c1 = cognitive_c1
+        self.social_c2 = social_c2
 
     def initialize_swarm(self, bounds, dimensions, swarm_size):
         swarm = []
@@ -27,20 +37,19 @@ class GlobalSwarm():
 
         return swarm
 
-    def __init__(self, function, dimensions, bounds,
-                 swarm_size, max_iter, inertia_w, cognitive_c1, social_c2):
+    def main(self):
 
         error_gbest = -1
         gbest = []
 
-        swarm = self.initialize_swarm(bounds, dimensions, swarm_size)
+        swarm = self.initialize_swarm(self.bounds, self.dimensions, self.swarm_size)
 
         i = 0
-        while i < max_iter:
+        while i < self.max_iter:
 
             #print("EVALUATE ERROR")
-            for j in range(0, swarm_size):
-                swarm[j].evaluate(function)
+            for j in range(0, self.swarm_size):
+                swarm[j].evaluate(self.function)
                 #print("p: %s -> %s -> error: %s" % (j, swarm[j].position, swarm[j].error))
 
                 if swarm[j].error < error_gbest or error_gbest == -1:
@@ -48,9 +57,9 @@ class GlobalSwarm():
                     error_gbest = float(swarm[j].error)
 
             #print("UPDATE VELOCITY AND POSITION")
-            for j in range(0, swarm_size):
-                swarm[j].update_velocity(gbest, dimensions, inertia_w, cognitive_c1, social_c2)
-                swarm[j].update_position(bounds, dimensions)
+            for j in range(0, self.swarm_size):
+                swarm[j].update_velocity(gbest, self.dimensions, self.inertia_w, self.cognitive_c1, self.social_c2)
+                swarm[j].update_position(self.bounds, self.dimensions)
                 #print("p: %s, pos ->%s\n-> vel:%s" % (j, swarm[j].position, swarm[j].velocity))
 
             i += 1
@@ -58,4 +67,5 @@ class GlobalSwarm():
             #print("ITERATION: %s" % i)
             #print("gBest: %s - error: %s" % (gbest, error_gbest))
 
-        print("gBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
+        #print("gBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
+        return error_gbest

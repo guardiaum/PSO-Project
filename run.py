@@ -1,6 +1,8 @@
 from classic.GlobalSwarm import *
-from classic.LocalSwarm import *
+from ring.LocalSwarm import *
+from lips.LIPSSwarm import *
 from util.BenchmarkFunctions import BenchmarkFunctions as Functions
+from evaluation.Evaluation import *
 
 # sets optimization function
 func = Functions.sphere
@@ -22,10 +24,24 @@ bounds5 = [(-2, 2), (-2, 2)]
 bounds5 = [(-15, 3), (-5, 3)]
 
 # Initialize Optimization Algorithms
-GlobalSwarm(function=func, dimensions=2, bounds=bounds1,
-            swarm_size=20, max_iter=1000,
-            inertia_w=0.5, cognitive_c1=0.5, social_c2=0.5)
+classic = GlobalSwarm(function=func, bounds=bounds1, swarm_size=20, max_iter=10000)
 
-LocalSwarm(function=func, dimensions=2, bounds=bounds1,
-           n_size=2, swarm_size=20, max_iter=1000,
-           inertia_w=0.5, cognitive_c1=0.5, social_c2=0.5)
+ring = LocalSwarm(function=func, bounds=bounds1, n_size=2, swarm_size=20, max_iter=10000)
+
+ring2 = LocalSwarm(function=func, bounds=bounds1,
+           n_size=6, swarm_size=20, max_iter=10000)
+
+# run
+classic_errors = []
+ring_errors = []
+ring2_errors = []
+
+for i in range(20):
+    print("Execution %s" % i)
+    classic_errors.append(classic.main())
+    ring_errors.append(ring.main())
+    ring2_errors.append(ring2.main())
+
+print(Evaluation.error_average(classic_errors))
+print(Evaluation.error_average(ring_errors))
+print(Evaluation.error_average(ring2_errors))
