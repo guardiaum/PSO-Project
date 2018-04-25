@@ -1,8 +1,31 @@
-from Particle import Particle
-from BenchmarkFunctions import BenchmarkFunctions as Functions
+from classic.Particle import Particle
+from random import random
+from random import uniform
+from random import randint
 
 
-class Swarm():
+class GlobalSwarm():
+
+    def initialize_swarm(self, bounds, dimensions, swarm_size):
+        swarm = []
+
+        #print("INITIAL POSITIONING")
+
+        lower_bound = bounds[0][0]
+        upper_bound = bounds[0][1]
+
+        for i in range(0, swarm_size):
+
+            p0 = []
+            v0 = []
+            for dim in range(0, dimensions):
+                p0.append(uniform(lower_bound, upper_bound))
+                v0.append(random())
+
+            swarm.append(Particle(p0, v0))
+            #print("p: %s -> %s" % (i, swarm[i].position))
+
+        return swarm
 
     def __init__(self, function, dimensions, bounds,
                  swarm_size, max_iter, inertia_w, cognitive_c1, social_c2):
@@ -10,12 +33,7 @@ class Swarm():
         error_gbest = -1
         gbest = []
 
-        swarm = []
-        print("INITIAL POSITIONING")
-
-        for i in range(0, swarm_size):
-            swarm.append(Particle(dimensions))
-            print("p: %s -> %s" % (i, swarm[i].position))
+        swarm = self.initialize_swarm(bounds, dimensions, swarm_size)
 
         i = 0
         while i < max_iter:
@@ -37,13 +55,7 @@ class Swarm():
 
             i += 1
 
-            print("ITERATION: %s" % i)
-            print("gBest: %s - error: %s" % (gbest, error_gbest))
+            #print("ITERATION: %s" % i)
+            #print("gBest: %s - error: %s" % (gbest, error_gbest))
 
-        print("END >>> gBest: %s - error: %s" % (gbest, error_gbest))
-
-
-func = Functions.goldstein_price
-Swarm(function=func, dimensions=2, bounds=[(-2, 2), (-2, 2)],
-      swarm_size=100, max_iter=10000,
-      inertia_w=0.5, cognitive_c1=0.5, social_c2=0.5)
+        print("gBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
