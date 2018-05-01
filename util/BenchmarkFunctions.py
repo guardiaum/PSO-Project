@@ -6,6 +6,7 @@ class BenchmarkFunctions(object):
     # global minimum
     # f(0,0)=0
     # -5.12 <= x,y <= 5.12
+    @staticmethod
     def rastringin(position):
         total = 0
         for i in range(len(position)):
@@ -16,6 +17,7 @@ class BenchmarkFunctions(object):
     # global minimum
     # f(0,0)=0
     # -5 <= x,y <= 5
+    @staticmethod
     def ackley(position):
         x = position[0]
         y = position[1]
@@ -28,6 +30,7 @@ class BenchmarkFunctions(object):
     # global minimum
     # f(0, ..., 0) = 0
     # -inf <= xi <= inf
+    @staticmethod
     def sphere(position):
         total = 0
 
@@ -40,6 +43,7 @@ class BenchmarkFunctions(object):
     # global minimum
     # f(0, ..., 0) = 0
     # -inf <= xi <= inf
+    @staticmethod
     def rosenbrock(position):
         total = 0
         for i in range(len(position)-1):
@@ -51,6 +55,7 @@ class BenchmarkFunctions(object):
     # global minimum
     # f(3,0.5)=0
     # -4.5 <= x, y <= 4.5
+    @staticmethod
     def beale(position):
         x = position[0]
         y = position[1]
@@ -61,6 +66,7 @@ class BenchmarkFunctions(object):
     # global minimum
     # f(0,-1)=3
     # -2 <= x, y <= 2
+    @staticmethod
     def goldstein_price(position):
         x = position[0]
         y = position[1]
@@ -73,6 +79,7 @@ class BenchmarkFunctions(object):
     # global minimum
     # f(1,3)=0
     # -10 <= x,y <= 10
+    @staticmethod
     def booth(position):
         x = position[0]
         y = position[1]
@@ -83,6 +90,7 @@ class BenchmarkFunctions(object):
     # f(-10,1)=0
     # -15 <= x <= -5
     # -3 <= y <= 3
+    @staticmethod
     def bukin_6(position):
         x = position[0]
         y = position[1]
@@ -92,6 +100,7 @@ class BenchmarkFunctions(object):
     # global minimum
     # f(0,0)=0
     # -10 <= x, y <= 10
+    @staticmethod
     def matyas(position):
         x = position[0]
         y = position[1]
@@ -101,6 +110,7 @@ class BenchmarkFunctions(object):
     # global minimum
     # f(1,1)=0
     # -10 <= x, y <= 10
+    @staticmethod
     def levi_13(position):
         x = position[0]
         y = position[1]
@@ -117,17 +127,48 @@ class BenchmarkFunctions(object):
     # f(-3.779310, -3.283186)=0.0
     # f(3.584428, -1.848126)=0.0
     # -5 <= x, y <= 5
+    @staticmethod
     def himmelblaus(position):
         x = position[0]
         y = position[1]
-        return (x**2 + y - 11)**2 + (x + y**2 - y)**2
+        return (x**2 + y - 11)**2 + (x + y**2 - 7)**2
 
 
     # global minimum
     # f(0,0)=0
     # -5 <= x, y <= 5
+    @staticmethod
     def three_hump_camel(position):
         x = position[0]
         y = position[1]
         return (2 * x**2) - (1.05 * x**4) + ((x**6)/6) + x * y + y**2
 
+    # global minimum
+    # f(1.34941, -1.34941) = -2.06261
+    # f(1.34941, 1.34941) = -2.06261
+    # f(-1.34941, 1.34941) = -2.06261
+    # f(-1.34941, -1.34941) = -2.06261
+    # -10 <= x,y <= 10
+    @staticmethod
+    def cross_in_tray(position):
+        x = position[0]
+        y = position[1]
+
+        a = math.exp(math.fabs(100 - (math.sqrt(x**2 + y**2) / math.pi)))
+        b = math.fabs(math.sin(x) * math.sin(y) * a) + 1
+
+        return -0.0001 * (b**0.1)
+
+    # global minimum
+    # f(8.05502, 9.66459) = -19.2085
+    # f(-8.05502, 9.66459) = -19.2085
+    # f(8.05502, -9.66459) = -19.2085
+    # f(-8.05502, -9.66459) = -19.2085
+    # -10 <= x,y <= 10
+    @staticmethod
+    def holder_table(position):
+        x = position[0]
+        y = position[1]
+
+        a = math.exp(math.fabs(1 - (math.sqrt(x**2 + y**2) / math.pi)))
+        return -math.fabs(math.sin(x) * math.cos(y) * a)

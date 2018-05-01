@@ -1,11 +1,10 @@
-from beans.ParticleLIPS import ParticleLIPS
+from beans.ParticleFIPS import ParticleFIPS
 from random import uniform
 
 
-class LIPSSwarm(object):
+class FIPSSwarm(object):
 
-    def __init__(self, function, bounds, swarm_size, nsize, max_iter,
-                 inertia_w=0.7298):
+    def __init__(self, function, bounds, swarm_size, nsize, max_iter, inertia_w=0.7298):
         self.function = function
         self.bounds = bounds
         self.dimensions = len(bounds)
@@ -18,6 +17,8 @@ class LIPSSwarm(object):
     def initialize_swarm(bounds, dimensions, swarm_size):
         swarm = []
 
+        # print("INITIAL POSITIONING")
+
         lower_bound = bounds[0][0]
         upper_bound = bounds[0][1]
 
@@ -29,7 +30,7 @@ class LIPSSwarm(object):
                 p0.append(uniform(lower_bound, upper_bound))
                 v0.append(uniform(lower_bound, upper_bound))
 
-            swarm.append(ParticleLIPS(p0, v0))
+            swarm.append(ParticleFIPS(p0, v0))
             # print("P: %s > %s - V: %s" % (i, swarm[i].position, swarm[i].velocity))
 
         return swarm
@@ -37,19 +38,18 @@ class LIPSSwarm(object):
     def main(self):
 
         gbest = []
-        error_best = []
+        error_best = -1
 
         swarm = self.initialize_swarm(self.bounds, self.dimensions, self.swarm_size)
 
         for i in range(0, len(swarm)):
             swarm[i].evaluate(self.function)
-            # print("P: %s > %s -> %s" % (i, swarm[i].pbest, swarm[i].error_best))
 
         iter = 0
         while iter < self.max_iter:
 
             for i in range(0, len(swarm)):
-                swarm[i].get_neighbors(self.nsize, swarm)
+                swarm[i].get_neighbors(i, self.nsize, swarm)
 
                 swarm[i].update_velocity(self.inertia_w, self.dimensions)
 
@@ -57,14 +57,10 @@ class LIPSSwarm(object):
 
                 swarm[i].evaluate(self.function)
 
+                if swarm[i].error < error_best or error_best == -1:
+                    gbest = swarm[i].position
+                    error_best = swarm[i].error_best
+
             iter += 1
 
-        print("\nLIPS Model")
-        for i in range(0, len(swarm)):
-            if swarm[i].error_best < 1 and swarm[i].error_best not in error_best:
-                gbest.append(swarm[i].position)
-                error_best.append(swarm[i].error_best)
-
-        for i in range(0, len(gbest)):
-            print("P: %s > %s -> %s" % (i, gbest[i], error_best[i]))
-
+        print("FIPS Model - >>> gBest: %s - error: %s" % (gbest, error_best))

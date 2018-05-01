@@ -1,6 +1,5 @@
 from beans.Particle import Particle
 from util.Neighborhood import Neighborhood
-from random import random
 from random import uniform
 
 
@@ -18,7 +17,8 @@ class LocalSwarm(object):
         self.cognitive_c1 = cognitive_c1
         self.social_c2 = social_c2
 
-    def initialize_swarm(self, bounds, dimensions, swarm_size):
+    @staticmethod
+    def initialize_swarm(bounds, dimensions, swarm_size):
         swarm = []
 
         #print("INITIAL POSITIONING")
@@ -32,7 +32,7 @@ class LocalSwarm(object):
             v0 = []
             for dim in range(0, dimensions):
                 p0.append(uniform(lower_bound, upper_bound))
-                v0.append(random())
+                v0.append(uniform(lower_bound, upper_bound))
 
             swarm.append(Particle(p0, v0))
             #print("p: %s -> %s" % (i, swarm[i].position))
@@ -61,12 +61,7 @@ class LocalSwarm(object):
             # Find lbest for each particle
             for i in range(self.swarm_size):
                 # selection of neighborhood
-                # static/dynamic
                 # static -> only list indexes
-                # dynamic -> euclidian distance
-                '''
-                neighbors = Neighborhood.get_dynamic(swarm[i], n_size, swarm)
-                '''
                 neighbors = Neighborhood.get_static(i, self.n_size, self.swarm_size)
 
                 lbest = swarm[i]
@@ -89,5 +84,5 @@ class LocalSwarm(object):
             #print("ITERATION: %s" % iter)
             #print("gBest: %s - error: %s" % (gbest, error_gbest))
 
-        #print("lBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
+        print("lBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
         return error_gbest

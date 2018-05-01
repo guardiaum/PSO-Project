@@ -16,7 +16,8 @@ class GlobalSwarm(object):
         self.cognitive_c1 = cognitive_c1
         self.social_c2 = social_c2
 
-    def initialize_swarm(self, bounds, dimensions, swarm_size):
+    @staticmethod
+    def initialize_swarm(bounds, dimensions, swarm_size):
         swarm = []
 
         #print("INITIAL POSITIONING")
@@ -30,7 +31,7 @@ class GlobalSwarm(object):
             v0 = []
             for dim in range(0, dimensions):
                 p0.append(uniform(lower_bound, upper_bound))
-                v0.append(random())
+                v0.append(uniform(lower_bound, upper_bound))
 
             swarm.append(Particle(p0, v0))
             #print("p: %s -> %s" % (i, swarm[i].position))
@@ -67,5 +68,5 @@ class GlobalSwarm(object):
             #print("ITERATION: %s" % i)
             #print("gBest: %s - error: %s" % (gbest, error_gbest))
 
-        #print("gBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
+        print("gBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
         return error_gbest
