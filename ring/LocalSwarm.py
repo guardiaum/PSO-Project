@@ -21,7 +21,7 @@ class LocalSwarm(object):
     def initialize_swarm(bounds, dimensions, swarm_size):
         swarm = []
 
-        #print("INITIAL POSITIONING")
+        # print("INITIAL POSITIONING")
 
         lower_bound = bounds[0][0]
         upper_bound = bounds[0][1]
@@ -35,7 +35,7 @@ class LocalSwarm(object):
                 v0.append(uniform(lower_bound, upper_bound))
 
             swarm.append(Particle(p0, v0))
-            #print("p: %s -> %s" % (i, swarm[i].position))
+            # print("p: %s -> %s" % (i, swarm[i].position))
 
         return swarm
 
@@ -81,8 +81,8 @@ class LocalSwarm(object):
 
             iter += 1
 
-            #print("ITERATION: %s" % iter)
-            #print("gBest: %s - error: %s" % (gbest, error_gbest))
+            # print("ITERATION: %s" % iter)
+            # print("gBest: %s - error: %s" % (gbest, error_gbest))
 
-        print("lBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
+        # print("lBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
         return error_gbest

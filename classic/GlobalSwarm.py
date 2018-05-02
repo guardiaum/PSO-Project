@@ -20,7 +20,7 @@ class GlobalSwarm(object):
     def initialize_swarm(bounds, dimensions, swarm_size):
         swarm = []
 
-        #print("INITIAL POSITIONING")
+        # print("INITIAL POSITIONING")
 
         lower_bound = bounds[0][0]
         upper_bound = bounds[0][1]
@@ -34,7 +34,7 @@ class GlobalSwarm(object):
                 v0.append(uniform(lower_bound, upper_bound))
 
             swarm.append(Particle(p0, v0))
-            #print("p: %s -> %s" % (i, swarm[i].position))
+            # print("p: %s -> %s" % (i, swarm[i].position))
 
         return swarm
 
@@ -48,25 +48,25 @@ class GlobalSwarm(object):
         i = 0
         while i < self.max_iter:
 
-            #print("EVALUATE ERROR")
+            # print("EVALUATE ERROR")
             for j in range(0, self.swarm_size):
                 swarm[j].evaluate(self.function)
-                #print("p: %s -> %s -> error: %s" % (j, swarm[j].position, swarm[j].error))
+                # print("p: %s -> %s -> error: %s" % (j, swarm[j].position, swarm[j].error))
 
                 if swarm[j].error < error_gbest or error_gbest == -1:
                     gbest = list(swarm[j].position)
                     error_gbest = float(swarm[j].error)
 
-            #print("UPDATE VELOCITY AND POSITION")
+            # print("UPDATE VELOCITY AND POSITION")
             for j in range(0, self.swarm_size):
                 swarm[j].update_velocity(gbest, self.dimensions, self.inertia_w, self.cognitive_c1, self.social_c2)
                 swarm[j].update_position(self.bounds, self.dimensions)
-                #print("p: %s, pos ->%s\n-> vel:%s" % (j, swarm[j].position, swarm[j].velocity))
+                # print("p: %s, pos ->%s\n-> vel:%s" % (j, swarm[j].position, swarm[j].velocity))
 
             i += 1
 
-            #print("ITERATION: %s" % i)
-            #print("gBest: %s - error: %s" % (gbest, error_gbest))
+            # print("ITERATION: %s" % i)
+            # print("gBest: %s - error: %s" % (gbest, error_gbest))
 
-        print("gBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
+        # print("gBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
         return error_gbest

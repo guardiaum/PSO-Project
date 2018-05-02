@@ -63,4 +63,5 @@ class FIPSSwarm(object):
 
             iter += 1
 
-        print("FIPS Model - >>> gBest: %s - error: %s" % (gbest, error_best))
+        # print("FIPS Model - >>> gBest: %s - error: %s" % (gbest, error_best))
+        return error_best
