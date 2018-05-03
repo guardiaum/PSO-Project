@@ -42,6 +42,7 @@ class LocalSwarm(object):
     def main(self):
 
         error_gbest = -1
+        error_gbests = []
         gbest = []
         lbests = [None] * self.swarm_size
 
@@ -79,10 +80,11 @@ class LocalSwarm(object):
                 swarm[i].update_velocity(lbest, self.dimensions, self.inertia_w, self.cognitive_c1, self.social_c2)
                 swarm[i].update_position(self.bounds, self.dimensions)
 
+            error_gbests.append(error_gbest)
             iter += 1
 
             # print("ITERATION: %s" % iter)
             # print("gBest: %s - error: %s" % (gbest, error_gbest))
 
         # print("lBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
-        return error_gbest
+        return error_gbest, error_gbests

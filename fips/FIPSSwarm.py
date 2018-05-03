@@ -39,6 +39,7 @@ class FIPSSwarm(object):
 
         gbest = []
         error_best = -1
+        error_bests = []
 
         swarm = self.initialize_swarm(self.bounds, self.dimensions, self.swarm_size)
 
@@ -61,7 +62,8 @@ class FIPSSwarm(object):
                     gbest = swarm[i].position
                     error_best = swarm[i].error_best
 
+            error_bests.append(error_best)
             iter += 1
 
         # print("FIPS Model - >>> gBest: %s - error: %s" % (gbest, error_best))
-        return error_best
+        return error_best, error_bests

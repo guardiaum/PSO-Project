@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from random import randint
 
 class PlotData(object):
 
@@ -32,12 +33,34 @@ class PlotData(object):
             print('y: ', y)
             line, = plt.plot(x, y, label=label, marker=marker)
             lines.append(line)
-        plt.suptitle("Convergence plot over max iterations for Function: %s" % function_name)
+        plt.suptitle("Average fitness over max iterations for Function: %s" % function_name)
         plt.title("Bounds: %s, Global Minimum: %s" % (bounds, minimum), fontdict={'fontsize': 8})
         plt.xlabel('max iterations')
-        plt.ylabel('convergence point')
+        plt.ylabel('fitness')
         plt.legend(lines, names)
-        plt.savefig("plots/" + function_name + "_convergence_iterations_plot.png", bbox_inches='tight')
+        plt.savefig("plots/convergence_iter/" + function_name + "_convergence_iterations_plot.png", bbox_inches='tight')
+        plt.gcf().clear()
+        plt.cla()
+        plt.clf()
+        plt.close()
+
+    @staticmethod
+    def convergence_plot(data, function_name, bounds, minimum):
+        lines = []
+        names = []
+        for key, values in data.items():
+            x = range(1, len(values)+1)
+            y = values
+            line, = plt.plot(x, y, label=key)
+            names.append(key)
+            lines.append(line)
+
+        plt.suptitle("Convergence plot over max iterations for Function: %s" % function_name)
+        plt.title("Bounds: %s, Global Minimum: %s" % (bounds, minimum), fontdict={'fontsize': 8})
+        plt.xlabel('iteration')
+        plt.ylabel('fitness')
+        plt.legend(lines, names)
+        plt.savefig("plots/convergence/" + function_name + "_convergence_plot.png", bbox_inches='tight')
         plt.gcf().clear()
         plt.cla()
         plt.clf()

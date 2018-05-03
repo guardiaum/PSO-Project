@@ -41,6 +41,7 @@ class GlobalSwarm(object):
     def main(self):
 
         error_gbest = -1
+        error_gbests = []
         gbest = []
 
         swarm = self.initialize_swarm(self.bounds, self.dimensions, self.swarm_size)
@@ -63,10 +64,11 @@ class GlobalSwarm(object):
                 swarm[j].update_position(self.bounds, self.dimensions)
                 # print("p: %s, pos ->%s\n-> vel:%s" % (j, swarm[j].position, swarm[j].velocity))
 
+            error_gbests.append(error_gbest)
             i += 1
 
             # print("ITERATION: %s" % i)
             # print("gBest: %s - error: %s" % (gbest, error_gbest))
 
         # print("gBest Model - >>> gBest: %s - error: %s" % (gbest, error_gbest))
-        return error_gbest
+        return error_gbest, error_gbests
