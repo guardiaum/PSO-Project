@@ -59,14 +59,14 @@ class LIPSSwarm(object):
 
             iter += 1
 
-        '''
+
         print("\nLIPS Model")
         for i in range(0, len(swarm)):
             if swarm[i].error_best < 1 and swarm[i].error_best not in error_best:
-                gbest.append(swarm[i].position)
+                gbest.append(swarm[i].pbest)
                 error_best.append(swarm[i].error_best)
 
         for i in range(0, len(gbest)):
             print("P: %s > %s -> %s" % (i, gbest[i], error_best[i]))
-        '''
+
         return error_best

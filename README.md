@@ -3,10 +3,10 @@
 
 Some baseline implementations of Particle Swarm Optimizers.
 1. Classical (gBest and lBest models)
-2. FIPS (Cellular PSO with rind topology); &
+2. FIPS (Cellular PSO with ring topology); &
 3. LIPS (Niche PSO).
 
-####References:
+#### References:
 
 * R. Eberhart and J. Kennedy, **"A new optimizer using particle swarm theory"** Micro Machine and Human Science, 1995. MHS '95., Proceedings of the Sixth International Symposium on, Nagoya, 1995, pp. 39-43.
 doi: 10.1109/MHS.1995.494215. 

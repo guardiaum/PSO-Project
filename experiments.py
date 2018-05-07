@@ -1,5 +1,5 @@
 from util.BenchmarkFunctions import BenchmarkFunctions as Functions
-from util.run import no_repetitions
+from util.run import *
 
 ''' Tests with 2 dimensions '''
 
@@ -38,8 +38,31 @@ bounds_ = [rastringin_bounds, sphere_bounds, rosenbrock_bounds, bounds2,
            beale_bounds, goldstein_bounds, bounds1,
            bukin_bounds, bounds1, bounds1, bounds2]
 
+'''
 
 for i in range(0, len(functions_name)):
     print(functions_name[i])
     # run_repetitions(functions[i], functions_name[i], bounds_[i], minimus[i])
     no_repetitions(100, functions[i], functions_name[i], bounds_[i], minimus[i])
+
+'''
+
+'''
+    MULTIMODAL EXPERIMENTS
+'''
+
+cross_in_tray_bounds = [(-10, 10)] * 2 # cross_in_tray
+holder_table_bounds = [(-10, 10)]  * 2 # holder_table
+himmelblaus_bounds = [(-5, 5)] * 2 # himmelblaus
+
+cross_in_tray_minimum = -2.06261  # 4
+holder_table_minimum = -19.2085  # 4
+himmelblaus_minimum = 0.0  # 4
+
+functions = [Functions.cross_in_tray, Functions.holder_table, Functions.himmelblaus]
+functions_name = ['cross_in_tray', 'holder_table', 'himmelblaus']
+functions_bounds = [cross_in_tray_bounds, holder_table_bounds, himmelblaus_bounds]
+
+for i in range(len(functions_name)):
+    print(functions_name[i])
+    niche_pso(functions[i], functions_bounds[i], 2, 200)

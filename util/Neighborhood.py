@@ -30,7 +30,7 @@ class Neighborhood(object):
         return neighbors
 
     @staticmethod
-    def get_dynamic(particle, n_size, swarm):
+    def get_dynamic(particle_pbest, n_size, swarm):
 
         def use_distance(temp):
             return temp[1]
@@ -38,7 +38,8 @@ class Neighborhood(object):
         distances = []
 
         for i in range(len(swarm)):
-            distance = Neighborhood.euclidian_dist(particle.pbest, swarm[i].pbest)
+            neighbor = swarm[i]
+            distance = Neighborhood.euclidian_dist(particle_pbest, neighbor.pbest)
             distances.append([i, distance])
 
         distances = sorted(distances, key=use_distance)

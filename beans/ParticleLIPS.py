@@ -27,11 +27,13 @@ class ParticleLIPS(Particle):
         numerator = 0
         phi_ = 0
 
-        for k in range(0, len(self.neighbors)):
-            for d in range(0, dimensions):
-                numerator += (phi[k] * self.neighbors[k].pbest[d]) / self.n_size
+        for d in range(0, dimensions):
+            for k in range(0, len(self.neighbors)):
+                numerator += phi[k] * self.neighbors[k].pbest[d]
                 phi_ += phi[k]
-            p.append(numerator / phi_)
+
+            p.append((numerator / self.n_size) / phi_)
+
         return p
 
     def calculate_phi(self):

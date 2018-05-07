@@ -1,14 +1,19 @@
 from classic.GlobalSwarm import *
 from ring.LocalSwarm import *
-from lips.LIPSSwarm import *
 from fips.FIPSSwarm import *
+from lips.LIPSSwarm import *
 from evaluation.Evaluation import *
 from evaluation.PlotData import *
 
 
+def niche_pso(func, bounds, n_size, max_iter):
+    lips = LIPSSwarm(function=func, bounds=bounds, swarm_size=50, nsize=n_size, max_iter=max_iter)
+    lips.main();
+
+
 def repetitions(func, function_name, bounds,  minimum):
     final = []
-    algorithms = ['classic', 'ring_2n', 'ring_6n', 'fips']
+    algorithms = ['classic', 'ring_2n', 'ring_6n', 'fips', 'wfips', 'wdfips']
 
     # iterations
     for max_iter in range(100, 2100, 100):
@@ -21,7 +26,6 @@ def repetitions(func, function_name, bounds,  minimum):
         fips = FIPSSwarm(function=func, bounds=bounds, swarm_size=10, nsize=2, w_type='static', max_iter=max_iter)
         wfips = FIPSSwarm(function=func, bounds=bounds, swarm_size=10, nsize=2, w_type='fitness', max_iter=max_iter)
         wdfips = FIPSSwarm(function=func, bounds=bounds, swarm_size=10, nsize=2, w_type='distance', max_iter=max_iter)
-        # lips = LIPSSwarm(function=func, bounds=bounds, swarm_size=50, nsize=2, max_iter=max_iter)
 
         classic_errors = []
         ring_errors = []
