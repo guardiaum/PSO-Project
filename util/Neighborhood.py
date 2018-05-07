@@ -4,11 +4,11 @@ import math
 class Neighborhood(object):
 
     @staticmethod
-    def euclidian_dist(pbest, neighbor):
+    def euclidian_dist(particle_position, neighbor_position):
         distance = 0
 
-        for i in range(0, len(pbest)):
-            distance += (neighbor.pbest[i] - pbest[i]) ** 2
+        for i in range(0, len(particle_position)):
+            distance += (particle_position[i] - neighbor_position[i]) ** 2
 
         return math.sqrt(distance)
 
@@ -38,11 +38,10 @@ class Neighborhood(object):
         distances = []
 
         for i in range(len(swarm)):
-            distance = Neighborhood.euclidian_dist(particle, swarm[i])
+            distance = Neighborhood.euclidian_dist(particle.pbest, swarm[i].pbest)
             distances.append([i, distance])
 
         distances = sorted(distances, key=use_distance)
-
         neighbors = []
         for j in range(1, n_size + 1):
             neighbors.append(swarm[distances[j][0]])

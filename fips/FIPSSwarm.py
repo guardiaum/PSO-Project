@@ -4,13 +4,14 @@ from random import uniform
 
 class FIPSSwarm(object):
 
-    def __init__(self, function, bounds, swarm_size, nsize, max_iter, inertia_w=0.7298):
+    def __init__(self, function, bounds, swarm_size, nsize, max_iter, w_type, inertia_w=0.7298):
         self.function = function
         self.bounds = bounds
         self.dimensions = len(bounds)
         self.swarm_size = swarm_size
         self.nsize = nsize
         self.max_iter = max_iter
+        self.w_type = w_type
         self.inertia_w = inertia_w
 
     @staticmethod
@@ -52,7 +53,7 @@ class FIPSSwarm(object):
             for i in range(0, len(swarm)):
                 swarm[i].get_neighbors(i, self.nsize, swarm)
 
-                swarm[i].update_velocity(self.inertia_w, self.dimensions)
+                swarm[i].update_velocity(self.inertia_w, self.dimensions, self.w_type)
 
                 swarm[i].update_position(self.bounds, self.dimensions)
 

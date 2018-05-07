@@ -20,31 +20,43 @@ class ParticleFIPS(Particle):
 
         self.n_size = len(self.neighbors)
 
-    def update_velocity(self, inertia_w, dimensions):
+    def update_velocity(self, inertia_w, dimensions, w_type):
         phi = self.calculate_phi()
-        p = self.calculate_p(phi, dimensions)
+        p = self.calculate_p(phi, dimensions, w_type)
 
         phi_ = 0
         for i in range(0, len(phi)):
-            phi_ *= phi[i]
+            phi_ += phi[i]
 
         for d in range(0, dimensions):
             self.velocity[d] = inertia_w * (self.velocity[d] + phi_ * (p[d] - self.position[d]))
 
-    def calculate_p(self, phi, dimensions):
+    def calculate_p(self, phi, dimensions, w_type):
         p = []
         numerator = 0
         divisor = 0
 
-        for k in range(0, len(self.neighbors)):
-            for d in range(dimensions):
-                k_fitness = self.neighbors[k].error_best
-                numerator += k_fitness * phi[k] * self.neighbors[k].pbest[d]
-                divisor += k_fitness * phi[k]
+        for d in range(dimensions):
+            for k in range(0, len(self.neighbors)):
+                w_value = self.get_w(k, w_type)
+                numerator += w_value * phi[k] * self.neighbors[k].pbest[d]
+                divisor += w_value * phi[k]
 
             p.append(numerator / divisor)
 
         return p
+
+    def get_w(self, k, w_type):
+        if w_type == 'static':  # FIPS
+            return 0.5
+        elif w_type == 'fitness':  # wFIPS
+            return self.neighbors[k].error_best
+        elif w_type == 'distance':  # wdFIPS
+            distance = Neighborhood.euclidian_dist(self.position, self.neighbors[k].pbest)
+            if distance < 0.001:
+                return 0.001
+            else:
+                return distance
 
     def calculate_phi(self):
 

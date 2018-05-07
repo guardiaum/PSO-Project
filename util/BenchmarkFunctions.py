@@ -51,6 +51,33 @@ class BenchmarkFunctions(object):
 
         return total
 
+    # global minimum
+    # f(x*) = 0 -> x* = (0, ..., 0)
+    # -600 <= xi <= 600
+    @staticmethod
+    def griewank(position):
+        a = 0
+        for i in range(1, len(position)+1):
+            a += (position[i-1]**2)/4000
+
+        b = 0
+        for i in range(1, len(position)+1):
+            b *= math.cos(position[i-1]/math.sqrt(i)) + 1
+
+        return a - b
+
+    # Global minimum
+    # f(x*) = 0 -> x* = 0
+    # -100 <= xi <= 100
+    @staticmethod
+    def schaffer_n6(position):
+        x = position[0]
+        y = position[1]
+
+        a = math.sin(math.sqrt(x**2 + y**2)) - 0.5
+        b = (1 + 0.001 * (x**2 + y**2))**2
+
+        return 0.5 + (a/b)
 
     # global minimum
     # f(3,0.5)=0

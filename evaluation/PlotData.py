@@ -34,7 +34,7 @@ class PlotData(object):
             line, = plt.plot(x, y, label=label, marker=marker)
             lines.append(line)
         plt.suptitle("Average fitness over max iterations for Function: %s" % function_name)
-        plt.title("Bounds: %s, Global Minimum: %s" % (bounds, minimum), fontdict={'fontsize': 8})
+        plt.title("Bounds: %s, Global Minimum: %s" % (bounds[0], minimum), fontdict={'fontsize': 8})
         plt.xlabel('max iterations')
         plt.ylabel('fitness')
         plt.legend(lines, names)
@@ -56,7 +56,7 @@ class PlotData(object):
             lines.append(line)
 
         plt.suptitle("Convergence plot over max iterations for Function: %s" % function_name)
-        plt.title("Bounds: %s, Global Minimum: %s" % (bounds, minimum), fontdict={'fontsize': 8})
+        plt.title("Bounds: %s, Global Minimum: %s" % (bounds[0], minimum), fontdict={'fontsize': 8})
         plt.xlabel('iteration')
         plt.ylabel('fitness')
         plt.legend(lines, names)
