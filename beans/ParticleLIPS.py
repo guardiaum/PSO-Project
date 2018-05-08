@@ -29,10 +29,10 @@ class ParticleLIPS(Particle):
 
         for d in range(0, dimensions):
             for k in range(0, len(self.neighbors)):
-                numerator += phi[k] * self.neighbors[k].pbest[d]
+                numerator += (phi[k] * self.neighbors[k].position[d]) / self.n_size
                 phi_ += phi[k]
 
-            p.append((numerator / self.n_size) / phi_)
+            p.append(numerator / phi_)
 
         return p
 
@@ -49,5 +49,5 @@ class ParticleLIPS(Particle):
         return phi
 
     def get_neighbors(self, n_size, swarm):
-        self.neighbors = Neighborhood.get_dynamic(self.pbest, n_size, swarm)
+        self.neighbors = Neighborhood.get_dynamic(self.position, n_size, swarm)
         self.n_size = len(self.neighbors)

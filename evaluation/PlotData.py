@@ -7,7 +7,7 @@ class PlotData(object):
     def convergence_iteration_plot(algorithms, final, function_name, bounds, minimum):
         lines = []
         names = []
-        markers = ['o', '8', 's', '*', 'p']
+        markers = ['o', '8', 's', '*', 'p', '+']
         for i in range(0, len(algorithms)):
 
             x = []

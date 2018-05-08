@@ -6,8 +6,8 @@ from evaluation.Evaluation import *
 from evaluation.PlotData import *
 
 
-def niche_pso(func, bounds, n_size, max_iter):
-    lips = LIPSSwarm(function=func, bounds=bounds, swarm_size=50, nsize=n_size, max_iter=max_iter)
+def niche_pso(func, bounds, known_peeks, e, n_size, max_iter):
+    lips = LIPSSwarm(function=func, bounds=bounds, swarm_size=50, known_peeks=known_peeks, e=e, nsize=n_size, max_iter=max_iter)
     lips.main();
 
 
@@ -20,12 +20,12 @@ def repetitions(func, function_name, bounds,  minimum):
         print("max iteration: ", max_iter)
 
         # Initialize Optimization Algorithms
-        classic = GlobalSwarm(function=func, bounds=bounds, swarm_size=10, max_iter=max_iter)
-        ring = LocalSwarm(function=func, bounds=bounds, n_size=2, swarm_size=10, max_iter=max_iter)
-        ring2 = LocalSwarm(function=func, bounds=bounds, n_size=6, swarm_size=10, max_iter=max_iter)
-        fips = FIPSSwarm(function=func, bounds=bounds, swarm_size=10, nsize=2, w_type='static', max_iter=max_iter)
-        wfips = FIPSSwarm(function=func, bounds=bounds, swarm_size=10, nsize=2, w_type='fitness', max_iter=max_iter)
-        wdfips = FIPSSwarm(function=func, bounds=bounds, swarm_size=10, nsize=2, w_type='distance', max_iter=max_iter)
+        classic = GlobalSwarm(function=func, bounds=bounds, swarm_size=50, max_iter=max_iter)
+        ring = LocalSwarm(function=func, bounds=bounds, n_size=2, swarm_size=50, max_iter=max_iter)
+        ring2 = LocalSwarm(function=func, bounds=bounds, n_size=6, swarm_size=50, max_iter=max_iter)
+        fips = FIPSSwarm(function=func, bounds=bounds, swarm_size=50, nsize=2, w_type='static', max_iter=max_iter)
+        wfips = FIPSSwarm(function=func, bounds=bounds, swarm_size=50, nsize=2, w_type='fitness', max_iter=max_iter)
+        wdfips = FIPSSwarm(function=func, bounds=bounds, swarm_size=50, nsize=2, w_type='distance', max_iter=max_iter)
 
         classic_errors = []
         ring_errors = []
@@ -70,12 +70,12 @@ def repetitions(func, function_name, bounds,  minimum):
 
 def no_repetitions(max_iter, func, function_name, bounds, minimum):
     # Initialize Optimization Algorithms
-    classic = GlobalSwarm(function=func, bounds=bounds, swarm_size=10, max_iter=max_iter)
-    ring = LocalSwarm(function=func, bounds=bounds, n_size=2, swarm_size=10, max_iter=max_iter)
-    ring2 = LocalSwarm(function=func, bounds=bounds, n_size=6, swarm_size=10, max_iter=max_iter)
-    fips = FIPSSwarm(function=func, bounds=bounds, swarm_size=10, nsize=2, w_type='static', max_iter=max_iter)
-    wfips = FIPSSwarm(function=func, bounds=bounds, swarm_size=10, nsize=2, w_type='fitness', max_iter=max_iter)
-    wdfips = FIPSSwarm(function=func, bounds=bounds, swarm_size=10, nsize=2, w_type='distance', max_iter=max_iter)
+    classic = GlobalSwarm(function=func, bounds=bounds, swarm_size=50, max_iter=max_iter)
+    ring = LocalSwarm(function=func, bounds=bounds, n_size=2, swarm_size=50, max_iter=max_iter)
+    ring2 = LocalSwarm(function=func, bounds=bounds, n_size=6, swarm_size=50, max_iter=max_iter)
+    fips = FIPSSwarm(function=func, bounds=bounds, swarm_size=50, nsize=2, w_type='static', max_iter=max_iter)
+    wfips = FIPSSwarm(function=func, bounds=bounds, swarm_size=50, nsize=2, w_type='fitness', max_iter=max_iter)
+    wdfips = FIPSSwarm(function=func, bounds=bounds, swarm_size=50, nsize=2, w_type='distance', max_iter=max_iter)
 
     classic_gbest, classic_gbests = classic.main()
     ring_gbest, ring_gbests = ring.main()

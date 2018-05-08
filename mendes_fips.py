@@ -33,5 +33,5 @@ bounds_ = [rastringin_bounds, sphere_bounds, rosenbrock_bounds,
 # execution
 for i in range(0, len(functions)):
     print(functions_name[i])
-    repetitions(functions[i], functions_name[i], bounds_[i], minimus[i])
-    # no_repetitions(1000, functions[i], functions_name[i], bounds_[i], minimus[i])
+    # repetitions(functions[i], functions_name[i], bounds_[i], minimus[i])
+    no_repetitions(1000, functions[i], functions_name[i], bounds_[i], minimus[i])

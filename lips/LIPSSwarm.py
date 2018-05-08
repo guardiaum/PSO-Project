@@ -1,10 +1,11 @@
 from beans.ParticleLIPS import ParticleLIPS
 from random import uniform
+from math import fabs
 
 
 class LIPSSwarm(object):
 
-    def __init__(self, function, bounds, swarm_size, nsize, max_iter,
+    def __init__(self, function, bounds, swarm_size, known_peeks, e, nsize, max_iter,
                  inertia_w=0.7298):
         self.function = function
         self.bounds = bounds
@@ -13,6 +14,9 @@ class LIPSSwarm(object):
         self.nsize = nsize
         self.max_iter = max_iter
         self.inertia_w = inertia_w
+        self.known_peeks = known_peeks[0]
+        self.number_of_peeks = len(known_peeks)
+        self.e = e
 
     @staticmethod
     def initialize_swarm(bounds, dimensions, swarm_size):
@@ -59,14 +63,15 @@ class LIPSSwarm(object):
 
             iter += 1
 
-
-        print("\nLIPS Model")
+        # stop criterium
+        # if all particles have converged to some point bellow e
+        # print("LIPS Model")
         for i in range(0, len(swarm)):
-            if swarm[i].error_best < 1 and swarm[i].error_best not in error_best:
-                gbest.append(swarm[i].pbest)
+            print("P: %s > %s > %s" % (i, swarm[i].pbest ,swarm[i].error_best))
+            if fabs(self.known_peeks - swarm[i].error_best) < self.e:
                 error_best.append(swarm[i].error_best)
 
         for i in range(0, len(gbest)):
-            print("P: %s > %s -> %s" % (i, gbest[i], error_best[i]))
+            print("P: %s > %s" % (i, error_best[i]))
 
         return error_best
